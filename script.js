@@ -36,14 +36,12 @@ function createBookElements(book) {
 const container = document.querySelector('.container')
 const newBookButton = document.querySelector('.newBookButton')
 
+newBookButton.addEventListener('click', createForm)
 
-function includeNewBook() {
-	const bookFrom = document.createElement('form')
-	container.appendChild(bookFrom)
-}
-
-function createFormsFields() {
-	for (let i = 0; i < Object.keys(emptyBook).length; i++){
+function createForm() {
+	const form = document.createElement('form')
+	container.append(form)
+	for (let i = 0; i < Object.keys(emptyBook).length; i++) {
 		const label = document.createElement('label')
 		const input = document.createElement('input')
 
@@ -53,9 +51,15 @@ function createFormsFields() {
 		input.setAttribute('type', 'text')
 		input.setAttribute('id', Object.keys(emptyBook)[i])
 
-		container.append(label)
-		container.append(input)		
+		form.append(label)
+		form.append(input)
 	}
+
+	
+	const addBookButton = document.createElement('button')
+	addBookButton.setAttribute('type', "submit")
+	form.append(addBookButton)
+	addBookButton.textContent = "Add Book"
 }
 
 
@@ -71,4 +75,5 @@ addBookToLibrary(harryPotter)
 createBook(harryPotter)
 createBook(theHobbit)
 
-createFormsFields()
+
+
