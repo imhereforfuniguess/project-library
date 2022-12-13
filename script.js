@@ -7,7 +7,7 @@ let book = function(title, author, pages, read){
 	this.read = read
 }
 
-const emptyBook = new book("", "", "", "")
+const emptyBook = new book("titleval", "authorval", "pagesval", "readval")
 
 function addBookToLibrary(addedBook) {
 	myLibrary.push(addedBook)
@@ -57,9 +57,24 @@ function createForm() {
 
 	
 	const addBookButton = document.createElement('button')
-	addBookButton.setAttribute('type', "submit")
 	form.append(addBookButton)
 	addBookButton.textContent = "Add Book"
+	addBookButton.addEventListener('click', readForm)
+	
+}
+
+// submit button takes the data from each dom element and puts it in memory
+function readForm () {
+	event.preventDefault();
+	let tempArray = []
+	for (let i = 0; i < Object.keys(emptyBook).length; i++){
+		let input = document.getElementById(Object.keys(emptyBook)[i]).value
+		tempArray.push(input)
+	}
+	const newBookDeclare = new book (tempArray[0],tempArray[1],tempArray[2],tempArray[3])
+	addBookToLibrary(newBookDeclare)
+	createBook(newBookDeclare)
+	console.log(tempArray)
 }
 
 
@@ -76,4 +91,16 @@ createBook(harryPotter)
 createBook(theHobbit)
 
 
+// TESTING
 
+// const testButton = document.querySelector('.testButton')
+
+
+// let a = 5
+// console.log(a)
+
+// testButton.addEventListener('click', () => {
+// 	a = 10
+// })
+
+// console.log(a)
