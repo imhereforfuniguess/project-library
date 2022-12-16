@@ -4,7 +4,7 @@ let book = function(title, author, pages, read){
 	this.title = title,
 	this.author = author,
 	this.pages = pages,
-	this.read = read
+	this.read = new Boolean(read)
 }
 
 const emptyBook = new book("titleval", "authorval", "pagesval", "readval")
@@ -14,11 +14,11 @@ function addBookToLibrary(addedBook) {
 }
 
 function createBook(book) {
-	createBookList(book)
+	createBookHolder(book)
 	createBookElements(book)
 }
 
-function createBookList(book) {
+function createBookHolder(book) {
 	const bookList = document.createElement('ul')
 	bookList.textContent = book.title
 	container.appendChild(bookList)
@@ -29,6 +29,12 @@ function createBookElements(book) {
 		const bookElement = document.createElement('li')
 		bookElement.textContent = `${Object.keys(book)[i]}:   ${Object.values(book)[i]}`
 		container.appendChild(bookElement)
+	}
+}
+
+function displayLibrary() {
+	for (let i = 0; i < myLibrary.length; i ++){
+		createBook(myLibrary[i])
 	}
 }
 
@@ -45,11 +51,17 @@ function createForm() {
 		const label = document.createElement('label')
 		const input = document.createElement('input')
 
+
 		label.setAttribute('for', Object.keys(emptyBook)[i])
 		label.textContent = Object.keys(emptyBook)[i]
 
-		input.setAttribute('type', 'text')
 		input.setAttribute('id', Object.keys(emptyBook)[i])
+
+		if ((i) == 3){
+			input.setAttribute('type', 'checkbox')
+		} else {
+			input.setAttribute('type', 'text')
+		}
 
 		form.append(label)
 		form.append(input)
@@ -67,14 +79,30 @@ function createForm() {
 function readForm () {
 	event.preventDefault();
 	let tempArray = []
-	for (let i = 0; i < Object.keys(emptyBook).length; i++){
+	for (let i = 0; i < Object.keys(emptyBook).length-1; i++){
 		let input = document.getElementById(Object.keys(emptyBook)[i]).value
 		tempArray.push(input)
+		console.log(input)
 	}
+
+	if (document.getElementById(Object.keys(emptyBook)[3]).checked) {
+		tempArray.push(true)
+	} else {
+		tempArray.push(false)
+	}
+
+
+
+
+	// How to make sending function automatic
 	const newBookDeclare = new book (tempArray[0],tempArray[1],tempArray[2],tempArray[3])
 	addBookToLibrary(newBookDeclare)
 	createBook(newBookDeclare)
 	console.log(tempArray)
+
+	const form = document.querySelector('form')
+	form.remove()
+	
 }
 
 
@@ -84,11 +112,12 @@ const theHobbit = new book("The Hobbit","J.R.R Tolkien", 250, 0)
 const harryPotter = new book("Harry Potter","J. K. Rowling", 678, 1)
 const dune = new book("Dune","F. Herbert", 412, 1)
 
+
 addBookToLibrary(theHobbit)
 addBookToLibrary(harryPotter)
 
-createBook(harryPotter)
-createBook(theHobbit)
+
+displayLibrary()
 
 
 // TESTING
@@ -104,3 +133,10 @@ createBook(theHobbit)
 // })
 
 // console.log(a)
+
+
+// TESTING MOST COMMON QUESTIONS HERE CAUSE WHY NOT
+// const testButton = document.querySelector('[data-id="test1"]')
+// testButton.addEventListener('click', () => {
+// 	window.location.href = 'https://github.com/'
+// })
