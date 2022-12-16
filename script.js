@@ -22,15 +22,58 @@ function createBookHolder(book) {
 	const bookList = document.createElement('ul')
 	bookList.textContent = book.title
 	container.appendChild(bookList)
+
+	// add a data attribute to ul
+	bookList.dataset.number = myLibrary.indexOf(book)
 }
 
+// function deleteBook(index) {
+// 	let deletedBook = document.querySelector(`[data-number="${index}"]`)
+// 	console.log(deletedBook)
+// }
+
 function createBookElements(book) {
+
+	// Create title, author, pages, read fields
 	for (let i = 0; i < Object.keys(book).length; i++){
 		const bookElement = document.createElement('li')
 		bookElement.textContent = `${Object.keys(book)[i]}:   ${Object.values(book)[i]}`
+		bookElement.dataset.number = myLibrary.indexOf(book)
 		container.appendChild(bookElement)
 	}
+
+	// Create book number in array, but don't append it
+	const bookNumber = document.createElement('li')
+	bookNumber.textContent = myLibrary.indexOf(book)
+	bookNumber.dataset.number = myLibrary.indexOf(book)
+
+
+	// Create delete book button
+	const bookDeleteButton = document.createElement('button')
+	bookDeleteButton.textContent = "delete"
+	container.appendChild(bookDeleteButton)
+	bookDeleteButton.dataset.number = myLibrary.indexOf(book)
+
+
+	bookDeleteButton.addEventListener('click', () => {
+		// Remove book container
+		while ((document.querySelector(`[data-number="${myLibrary.indexOf(book)}"]`)) != 0) {
+			let deletedBook = document.querySelector(`[data-number="${myLibrary.indexOf(book)}"]`)
+			deletedBook.remove()
+	
+		}
+		// // Remove book elements
+		// for (let i = 0; i < Object.keys(book).length+1; i++){
+		// 	const bookElement = document.querySelector('li')
+		// 	bookElement.remove()
+		// }
+
+		// // Remoe delete button
+		// bookDeleteButton.remove()
+	})
 }
+
+
 
 function displayLibrary() {
 	for (let i = 0; i < myLibrary.length; i ++){

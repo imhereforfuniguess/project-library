@@ -9,3 +9,9 @@ form {
     flex-direction: column;
     width: 200px;
 }
+
+button {
+    background-color: rgb(217, 217, 217);
+    height: 20px;;
+    width: 100px;
+}
